@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: WP Responsive Jquery Slider
-Plugin URI: http://vivacityinfotech.com/
+Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
 Version: 1.0
-Author URI: http://vivacityinfotech.com/
+Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
 */
@@ -24,6 +24,18 @@ License: vivacityinfotech
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+add_filter('plugin_row_meta', 'RegisterPluginLinks_slider',10, 2);
+function RegisterPluginLinks_slider($links, $file) {
+	if ( strpos( $file, 'wp-responsive-jquery-slider.php' ) !== false ) {
+		$links[] = '<a href="https://wordpress.org/plugins/wp-responsive-jquery-slider/faq/">FAQ</a>';
+		$links[] = '<a href="mailto:support@vivacityinfotech.com">Support</a>';
+		$links[] = '<a href="http://tinyurl.com/owxtkmt">Donate</a>';
+	}
+	return $links;
+}
+
+
+
 
 // setting in plugin page
 function wrjs_settings_page( $links ) {

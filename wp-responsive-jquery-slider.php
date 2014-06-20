@@ -29,7 +29,7 @@ function RegisterPluginLinks_slider($links, $file) {
 	if ( strpos( $file, 'wp-responsive-jquery-slider.php' ) !== false ) {
 		$links[] = '<a href="https://wordpress.org/plugins/wp-responsive-jquery-slider/faq/">FAQ</a>';
 		$links[] = '<a href="mailto:support@vivacityinfotech.com">Support</a>';
-		$links[] = '<a href="http://tinyurl.com/owxtkmt">Donate</a>';
+		$links[] = '<a href="http://bit.ly/1icl56K">Donate</a>';
 	}
 	return $links;
 }

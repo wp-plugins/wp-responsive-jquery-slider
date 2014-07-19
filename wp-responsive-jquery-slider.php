@@ -3,7 +3,7 @@
 Plugin Name: WP Responsive Jquery Slider
 Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
-Version: 1.0
+Version: 1.1
 Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
@@ -131,6 +131,7 @@ function enqueue_script_slider() {
 
 	wp_localize_script( 'slider_script', 'wrjs', array(
 		'effect'    => $options['effect_wrjs'],
+                'show_panel_nav' => $options['show_panel_nav_wrjs'],
 		'delay'     => $options['delay_wrjs'],
 		'duration'  => $options['duration_wrjs'],
 		'start'     => $options['start_wrjs']		
@@ -144,6 +145,13 @@ add_action( 'template_redirect', 'enqueue_script_slider' );
 function post_slider() {
 
 	$slides = new WP_Query( array( 'post_type' => 'vslides', 'order' => 'ASC', 'orderby' => 'menu_order' ) );
+        $options = get_option( 'get_settings_option' );
+        if ($options['show_panel_nav_wrjs']== 0){
+           $show_panel_nav = 'remove';
+        }
+       else{
+           $show_panel_nav = '';
+       }
 
 	$slider = '';
 	
@@ -190,6 +198,7 @@ function post_slider() {
 	wp_reset_query();
 
 	return $slider;
+
 }
 // shortcode for slider [post_slider]
 function shortcode_slider() {
@@ -306,7 +315,7 @@ function settings_box_slider() { ?>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'get_settings_option' ); ?>
 			<?php do_settings_sections( 'settings_section_slider' ); ?>
-			<br /><p><input type="submit" name="Submit" value="<?php  'Update Settings'; ?>" class="button-primary" /></p>
+			<br /><p><input type="submit" name="Submit" value="Update Settings" class="button-primary" /></p>
 			<br />
 		</form>
 		
@@ -325,6 +334,7 @@ function settings_start() {
 	add_settings_field( 'delay_wrjs', 'Slide Delay:', 'delay_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'duration_wrjs',  'Slide duration:', 'duration_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'effect_wrjs','Slide Effect:', 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
+        add_settings_field( 'show_panel_nav_wrjs','Show Slider Navigation arrows:', 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'start_wrjs', 'Start Automatically:', 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );		
 }
 add_action( 'admin_init', 'settings_start' );
@@ -379,7 +389,17 @@ function effect_wrjs() {
 }
 
 
+function show_panel_nav_wrjs() {
 
+	$options = get_option( 'get_settings_option' );
+	$show_panel_nav_wrjs = $options['show_panel_nav_wrjs'];
+        
+        
+	echo "<select id='show_panel_nav_wrjs' name='get_settings_option[show_panel_nav_wrjs]'>";
+	echo '<option value="1" ' . selected( $show_panel_nav_wrjs, '1', false ) . ' >' . 'Yes'. '</option>';
+	echo '<option value="0" ' . selected( $show_panel_nav_wrjs, '0', false ) . ' >' . 'No' . '</option>';
+	echo '</select>';	
+}
 
 
 function start_wrjs() {
@@ -397,6 +417,7 @@ function check_slider( $input ) {
 	$options['width_wrjs'] = wp_filter_nohtml_kses( intval( $input['width_wrjs'] ) );
 	$options['height_wrjs'] = wp_filter_nohtml_kses( intval( $input['height_wrjs'] ) );
 	$options['effect_wrjs'] = wp_filter_nohtml_kses( $input['effect_wrjs'] );
+        $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
 	$options['delay_wrjs'] = wp_filter_nohtml_kses( intval( $input['delay_wrjs'] ) );
 	$options['duration_wrjs'] = wp_filter_nohtml_kses( intval( $input['duration_wrjs'] ) );
 	$options['start_wrjs'] = isset( $input['start_wrjs'] ) ? 1 : 0;	
@@ -416,6 +437,7 @@ function defult_setting_slider() {
 			'effect_wrjs'    => 'slide',
 			'delay_wrjs'     => '5000',
 			'duration_wrjs'  => '600',
+                        'show_panel_nav_wrjs' => '1',
 			'start_wrjs'     => 1		
 		);	
 

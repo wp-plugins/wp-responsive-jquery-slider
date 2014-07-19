@@ -16,11 +16,18 @@ var $slidereffect = wrjs.effect;
 var $sliderdelay = parseInt(wrjs.delay);
 var $sliderduration = parseInt(wrjs.duration);
 var $sliderstart = parseInt(wrjs.start);
+var $showdirectionnav = parseInt(wrjs.show_panel_nav);
 
 if ($sliderstart == 1) {
 	$sliderstart = true;
 } else {
 	$sliderstart = false;
+}
+
+if ($showdirectionnav == 1) {
+	$showdirectionnav = true;
+} else {
+	$showdirectionnav = false;
 }
 
 wrjs1(window).load(function() {
@@ -29,7 +36,8 @@ wrjs1(window).load(function() {
 		animation: $slidereffect,
 		slideshowSpeed: $sliderdelay,
 		animationDuration: $sliderduration,
-		slideshow: $sliderstart
+		slideshow: $sliderstart,
+		directionNav : $showdirectionnav
 	} );
 });
 

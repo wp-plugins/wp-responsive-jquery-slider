@@ -72,6 +72,9 @@ Installation consists of following steps:
 
 == Changelog ==
 
+= 1.1 =
+Added a new feature to show navigation panel at silder. 
+
 = 1.0 =
 * Initial release
 

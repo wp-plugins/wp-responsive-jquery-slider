@@ -74,6 +74,7 @@ Installation consists of following steps:
 
 = 1.1 =
 Added a new feature to show navigation panel at silder. 
+Added a new feature for choose default post or custom post
 
 = 1.0 =
 * Initial release

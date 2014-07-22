@@ -131,7 +131,8 @@ function enqueue_script_slider() {
 
 	wp_localize_script( 'slider_script', 'wrjs', array(
 		'effect'    => $options['effect_wrjs'],
-                'show_panel_nav' => $options['show_panel_nav_wrjs'],
+      'show_panel_nav' => $options['show_panel_nav_wrjs'],
+       'change_post' => $options['post_wrjs'],
 		'delay'     => $options['delay_wrjs'],
 		'duration'  => $options['duration_wrjs'],
 		'start'     => $options['start_wrjs']		
@@ -143,9 +144,16 @@ add_action( 'template_redirect', 'enqueue_script_slider' );
 
 // get slide at front from custom post type
 function post_slider() {
-
+  $options = get_option( 'get_settings_option' );
+      if ($options['post_wrjs']=='vslide'){
 	$slides = new WP_Query( array( 'post_type' => 'vslides', 'order' => 'ASC', 'orderby' => 'menu_order' ) );
-        $options = get_option( 'get_settings_option' );
+	}
+	else{
+		
+		
+$slides = new WP_Query( array( 'post_type' => 'post', 'order' => 'ASC', 'orderby' => 'menu_order' ) );		
+		}
+      
         if ($options['show_panel_nav_wrjs']== 0){
            $show_panel_nav = 'remove';
         }
@@ -333,6 +341,7 @@ function settings_start() {
 	add_settings_field( 'height_wrjs', 'Slide height:', 'height_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'delay_wrjs', 'Slide Delay:', 'delay_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'duration_wrjs',  'Slide duration:', 'duration_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'post_wrjs','choose post:', 'post_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'effect_wrjs','Slide Effect:', 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
         add_settings_field( 'show_panel_nav_wrjs','Show Slider Navigation arrows:', 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'start_wrjs', 'Start Automatically:', 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );		
@@ -376,7 +385,16 @@ function duration_wrjs() {
 	<input type="text" id="duration_wrjs" name="get_settings_option[duration_wrjs]" value="<?php echo $duration_wrjs; ?>" /> <span class="description"><?php 'milliseconds'; ?></span>
 	
 <?php }
+function post_wrjs() {
 
+	$options = get_option( 'get_settings_option' );
+	$post_wrjs = $options['post_wrjs'];
+
+	echo "<select id='post_wrjs' name='get_settings_option[post_wrjs]'>";
+	echo '<option value="post" ' . selected( $post_wrjs, 'post', false ) . ' >' . 'post'. '</option>';
+	echo '<option value="vslide" ' . selected( $post_wrjs, 'vslide', false ) . ' >' . 'vslide' . '</option>';
+	echo '</select>';	
+}
 function effect_wrjs() {
 
 	$options = get_option( 'get_settings_option' );
@@ -417,7 +435,8 @@ function check_slider( $input ) {
 	$options['width_wrjs'] = wp_filter_nohtml_kses( intval( $input['width_wrjs'] ) );
 	$options['height_wrjs'] = wp_filter_nohtml_kses( intval( $input['height_wrjs'] ) );
 	$options['effect_wrjs'] = wp_filter_nohtml_kses( $input['effect_wrjs'] );
-        $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
+	$options['post_wrjs'] = wp_filter_nohtml_kses( $input['post_wrjs'] );
+   $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
 	$options['delay_wrjs'] = wp_filter_nohtml_kses( intval( $input['delay_wrjs'] ) );
 	$options['duration_wrjs'] = wp_filter_nohtml_kses( intval( $input['duration_wrjs'] ) );
 	$options['start_wrjs'] = isset( $input['start_wrjs'] ) ? 1 : 0;	
@@ -435,9 +454,10 @@ function defult_setting_slider() {
 			'width_wrjs'     => '960',
 			'height_wrjs'    => '350',
 			'effect_wrjs'    => 'slide',
+			'post_wrjs'    => 'vslide',
 			'delay_wrjs'     => '5000',
 			'duration_wrjs'  => '600',
-                        'show_panel_nav_wrjs' => '1',
+         'show_panel_nav_wrjs' => '1',
 			'start_wrjs'     => 1		
 		);	
 

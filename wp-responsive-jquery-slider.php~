@@ -3,7 +3,7 @@
 Plugin Name: WP Responsive Jquery Slider
 Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
-Version: 1.2
+Version: 1.1
 Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
@@ -131,12 +131,11 @@ function enqueue_script_slider() {
 
 	wp_localize_script( 'slider_script', 'wrjs', array(
 		'effect'    => $options['effect_wrjs'],
-                'show_panel_nav' => $options['show_panel_nav_wrjs'],
-                'change_post' => $options['post_wrjs'],
+      'show_panel_nav' => $options['show_panel_nav_wrjs'],
+       'change_post' => $options['post_wrjs'],
 		'delay'     => $options['delay_wrjs'],
 		'duration'  => $options['duration_wrjs'],
-		'start'     => $options['start_wrjs'],
-                'pauseOnHover'=> $options['pauseOnHover_wrjs']		
+		'start'     => $options['start_wrjs']		
 	) );
 }
 add_action( 'template_redirect', 'enqueue_style_slider' );
@@ -345,9 +344,7 @@ function settings_start() {
 	add_settings_field( 'post_wrjs','choose post:', 'post_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'effect_wrjs','Slide Effect:', 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
         add_settings_field( 'show_panel_nav_wrjs','Show Slider Navigation arrows:', 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'start_wrjs', 'Start Automatically:', 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );
-        add_settings_field( 'pauseOnHover_wrjs', 'Pause On Hover:', 'pauseOnHover_wrjs', 'settings_section_slider', 'get_option_change_value' );
-
+	add_settings_field( 'start_wrjs', 'Start Automatically:', 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );		
 }
 add_action( 'admin_init', 'settings_start' );
 
@@ -422,17 +419,6 @@ function show_panel_nav_wrjs() {
 	echo '</select>';	
 }
 
-function pauseOnHover_wrjs() {
-
-	$options = get_option( 'get_settings_option' );
-	$pauseOnHover_wrjs = $options['pauseOnHover_wrjs'];
- 
-	echo "<select id='pauseOnHover_wrjs' name='get_settings_option[pauseOnHover_wrjs]'>";
-	echo '<option value="1" ' . selected( $pauseOnHover_wrjs, '1', false ) . ' >' . 'Yes'. '</option>';
-	echo '<option value="0" ' . selected( $pauseOnHover_wrjs, '0', false ) . ' >' . 'No' . '</option>';
-	echo '</select>';
-	
- }
 
 function start_wrjs() {
 
@@ -442,7 +428,6 @@ function start_wrjs() {
 	echo "<input type='checkbox' id='start_wrjs' name='get_settings_option[start_wrjs]' value='1' " . checked( $start_wrjs, 1, false ) . " />";	
 }
 
-
 function check_slider( $input ) {
 	
 	$options = get_option( 'get_settings_option' );
@@ -451,11 +436,10 @@ function check_slider( $input ) {
 	$options['height_wrjs'] = wp_filter_nohtml_kses( intval( $input['height_wrjs'] ) );
 	$options['effect_wrjs'] = wp_filter_nohtml_kses( $input['effect_wrjs'] );
 	$options['post_wrjs'] = wp_filter_nohtml_kses( $input['post_wrjs'] );
-        $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
+   $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
 	$options['delay_wrjs'] = wp_filter_nohtml_kses( intval( $input['delay_wrjs'] ) );
 	$options['duration_wrjs'] = wp_filter_nohtml_kses( intval( $input['duration_wrjs'] ) );
-	$options['start_wrjs'] = isset( $input['start_wrjs'] ) ? 1 : 0;
-        $options['pauseOnHover_wrjs'] = wp_filter_nohtml_kses( $input['pauseOnHover_wrjs'] );	
+	$options['start_wrjs'] = isset( $input['start_wrjs'] ) ? 1 : 0;	
 	
 	return $options;
 }
@@ -473,9 +457,8 @@ function defult_setting_slider() {
 			'post_wrjs'    => 'vslide',
 			'delay_wrjs'     => '5000',
 			'duration_wrjs'  => '600',
-                        'show_panel_nav_wrjs' => '1',
-			'start_wrjs'     => 1,
-                        'pauseOnHover_wrjs' => '1'		
+         'show_panel_nav_wrjs' => '1',
+			'start_wrjs'     => 1		
 		);	
 
 		update_option( 'get_settings_option', $default_options );

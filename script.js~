@@ -17,7 +17,6 @@ var $sliderdelay = parseInt(wrjs.delay);
 var $sliderduration = parseInt(wrjs.duration);
 var $sliderstart = parseInt(wrjs.start);
 var $showdirectionnav = parseInt(wrjs.show_panel_nav);
-var $pauseOnHover = parseInt(wrjs.pauseOnHover);
 
 if ($sliderstart == 1) {
 	$sliderstart = true;
@@ -31,12 +30,6 @@ if ($showdirectionnav == 1) {
 	$showdirectionnav = false;
 }
 
-if ($pauseOnHover == 1) {
-	$pauseOnHover = true;
-} else {
-	$pauseOnHover = false;
-}
-
 wrjs1(window).load(function() {
 		
 	wrjs1('.wrjs').flexslider( {
@@ -44,8 +37,7 @@ wrjs1(window).load(function() {
 		slideshowSpeed: $sliderdelay,
 		animationDuration: $sliderduration,
 		slideshow: $sliderstart,
-		directionNav : $showdirectionnav,
-                pauseOnHover : $pauseOnHover
+		directionNav : $showdirectionnav
 	} );
 });
 

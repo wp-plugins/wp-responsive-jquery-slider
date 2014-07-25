@@ -75,7 +75,7 @@ Installation consists of following steps:
 == Changelog ==
 
 = 1.2 =
-Added a new feature to pause silder at hover. 
+Added a new feature to pause slider at hover. 
 
 = 1.1 =
 Added a new feature to show navigation panel at silder. 

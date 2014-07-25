@@ -50,6 +50,7 @@ Installation consists of following steps:
 1. Upload "WP Responsive Jquery Slider" to the /wp-content/plugins/ directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Place the "WP Responsive Jquery Slider"  in your dashboard menu a area.
+4. An easy way to add WP Responsive Jquery Slider in your pages and post with shortcode[post_slider].
 
 == Frequently Asked Questions ==
 

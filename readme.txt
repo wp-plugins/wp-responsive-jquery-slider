@@ -16,9 +16,6 @@ Create dynamic slideshows that adapt to any screen in just few clicks.
 WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.
 The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
 
-
-
-
 = Features =
 
     -Easy to install.
@@ -26,7 +23,6 @@ The jQuery plugin is completely free and totally open source, and there is liter
     -Fully responsive - will adapt to any device.
     -Uses jQuery transitions for slide/fade animation.
     -Browser support: Firefox, Chrome, Safari, Opera , IE7+
-
 = Translators =    
     English (US - en_Us) - [Team Vivacity](http://vivacityinfotech.net/)
     Chinese (China - zh_CN) [WebhostingHub](http://www.webhostinghub.com)

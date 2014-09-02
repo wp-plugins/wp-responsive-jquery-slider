@@ -41,12 +41,12 @@ If you like the plugin please [Donate here](http://bit.ly/1icl56K).
 
 == Available Languages ==
 
-    English
+    English (US - en_Us) - [Team Vivacity](http://vivacityinfotech.net/)
     Chinese (China - zh_CN) [WebhostingHub](http://www.webhostinghub.com)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [Us](http://vivacityinfotech.net/contact-us/) so that We can bundle it into this plugin.
 You can download the latest [POT file](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/
-/tags/1.3/languages/facebook-comment-by-vivacity.pot), and [PO files in each language](http://plugins.svn.wordpress.org/facebook-comment-by-vivacity/tags/1.0.3/languages/).
+/tags/1.3/languages/wp-responsive-jquery-slider.pot), and [PO files in each language](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/tags/1.3/languages/).
 
 == Installation ==
 

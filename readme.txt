@@ -1,11 +1,11 @@
  === WP Responsive Jquery Slider ===
 Contributors: vivacityinfotech.jaipur
-Donate link: http://tinyurl.com/owxtkmt
+Donate link: http://bit.ly/1icl56K
 Tags: WP Responsive Jquery Slider, Responsive Jquery Slider , Responsive Slider, Jquery Slider, Responsive Jquery Slider wordpress, Jquery Slider wordpress, Responsive Slider wordpress, Slider wordpress, Slider, image slider, photo slider, jquery slideshow, Responsive jquery slideshow, custom post type slider, image slider, image slider wordpress, responsive image slider, responsive image slider wordpress.  
 Requires at least: 3.0
-Tested up to: 3.8
+Tested up to: 3.9
 License: GPLv2 or later
-Stable tag: 1.2
+Stable tag: 1.3
 
 An easy way to add WP Responsive Jquery Slider in your pages and post with shortcode[post_slider].
 
@@ -37,11 +37,16 @@ Please take the time to let us and others know about your experiences by leaving
 
 If You Want more functionality or some modifications, just drop us a line what you want and We will try to add or modify the plugin functions.
 
-If you like the plugin please [Donate here](http://tinyurl.com/owxtkmt). 
+If you like the plugin please [Donate here](http://bit.ly/1icl56K). 
 
 == Available Languages ==
 
     English
+    Chinese (China - zh_CN) [WebhostingHub](http://www.webhostinghub.com)
+
+If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [Us](http://vivacityinfotech.net/contact-us/) so that We can bundle it into this plugin.
+You can download the latest [POT file](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/
+/tags/1.3/languages/facebook-comment-by-vivacity.pot), and [PO files in each language](http://plugins.svn.wordpress.org/facebook-comment-by-vivacity/tags/1.0.3/languages/).
 
 == Installation ==
 
@@ -74,8 +79,12 @@ Installation consists of following steps:
 
 == Changelog ==
 
+= 1.3 =
+Added a pot file for language translation support.
+Added po/mo file for  Chinese (China - zh_CN) language translation.
+
 = 1.2 =
-Added a new feature to pause silder at hover. 
+Added a new feature to pause slider at hover. 
 
 = 1.1 =
 Added a new feature to show navigation panel at silder. 

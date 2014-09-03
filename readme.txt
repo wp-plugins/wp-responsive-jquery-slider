@@ -3,7 +3,7 @@ Contributors: vivacityinfotech.jaipur
 Donate link: http://bit.ly/1icl56K
 Tags: WP Responsive Jquery Slider, Responsive Jquery Slider , Responsive Slider, Jquery Slider, Responsive Jquery Slider wordpress, Jquery Slider wordpress, Responsive Slider wordpress, Slider wordpress, Slider, image slider, photo slider, jquery slideshow, Responsive jquery slideshow, custom post type slider, image slider, image slider wordpress, responsive image slider, responsive image slider wordpress.  
 Requires at least: 3.0
-Tested up to: 3.9
+Tested up to: 3.9.2
 License: GPLv2 or later
 Stable tag: 1.3
 
@@ -18,7 +18,6 @@ The jQuery plugin is completely free and totally open source, and there is liter
 
 
 
-
 = Features =
 
     -Easy to install.
@@ -26,14 +25,12 @@ The jQuery plugin is completely free and totally open source, and there is liter
     -Fully responsive - will adapt to any device.
     -Uses jQuery transitions for slide/fade animation.
     -Browser support: Firefox, Chrome, Safari, Opera , IE7+
+    
+= Translators =
 
-= Translators =    
-    English (US - en_Us) - [Team Vivacity](http://vivacityinfotech.net/)
-    Chinese (China - zh_CN) [WebhostingHub](http://www.webhostinghub.com)
-
-If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [Us](http://vivacityinfotech.net/contact-us/) so that We can bundle it into this plugin.
-You can download the latest [POT file](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/
-/tags/1.3/languages/wp-responsive-jquery-slider.pot), and [PO files in each language](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/tags/1.3/languages/).
+* Chinese (China - zh_CN) - [Team Vivacity](http://vivacityinfotech.net/)
+* French (fr_FR) - [Team Vivacity](http://vivacityinfotech.net/) 
+* Serbian (sr_RS) - [Borisa](http://www.webhostinghub.com/)  
 
 = Rate Us / Feedback =
 
@@ -47,12 +44,15 @@ If you like the plugin please [Donate here](http://bit.ly/1icl56K).
 
 == Available Languages ==
 
-    English (US - en_Us) - [Team Vivacity](http://vivacityinfotech.net/)
-    Chinese (China - zh_CN) [WebhostingHub](http://www.webhostinghub.com)
+* English (EN - en_US) - [Team Vivacity](http://vivacityinfotech.net/)
+* Chinese (China - zh_CN) - [Team Vivacity](http://vivacityinfotech.net/)
+* French (fr_FR) - [Team Vivacity](http://vivacityinfotech.net/) 
+* Serbian (sr_RS) - [Borisa](http://www.webhostinghub.com/)  
 
-If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [Us](http://vivacityinfotech.net/contact-us/) so that We can bundle it into this plugin.
-You can download the latest [POT file](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/
-/tags/1.3/languages/wp-responsive-jquery-slider.pot), and [PO files in each language](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/tags/1.3/languages/).
+
+If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [Us](http://vivacityinfotech.net/contact-us/) so that We can bundle it into this plugin. You can download the latest [POT file](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/tags/1.3/languages/wp-responsive-jquery-slider.pot), and [PO files](http://plugins.svn.wordpress.org/wp-responsive-jquery-slider/tags/1.3/languages/) in each language.
+
+
 
 == Installation ==
 
@@ -87,7 +87,7 @@ Installation consists of following steps:
 
 = 1.3 =
 Added a pot file for language translation support.
-Added po/mo file for  Chinese (China - zh_CN) language translation.
+Added po/mo files for Chinese (China - zh_CN) and Serbian (sr_RS) language translation.
 
 = 1.2 =
 Added a new feature to pause slider at hover. 

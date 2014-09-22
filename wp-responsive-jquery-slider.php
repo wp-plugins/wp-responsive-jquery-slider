@@ -3,10 +3,12 @@
 Plugin Name: WP Responsive Jquery Slider
 Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
-Version: 1.2
+Version: 1.3
 Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
+Text Domain: wp-responsive-jquery-slider
+Domain Path: /languages/
 */
 
 /*Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : vivacityinfotech.jaipur@gmail.com)
@@ -24,22 +26,36 @@ License: vivacityinfotech
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+/*
+__( "Settings", "wp-responsive-jquery-slider" )
+
+<?php _e("Set","wp-responsive-jquery-slider") ?>
+
+*/
+
 add_filter('plugin_row_meta', 'RegisterPluginLinks_slider',10, 2);
 function RegisterPluginLinks_slider($links, $file) {
 	if ( strpos( $file, 'wp-responsive-jquery-slider.php' ) !== false ) {
 		$links[] = '<a href="https://wordpress.org/plugins/wp-responsive-jquery-slider/faq/">FAQ</a>';
-		$links[] = '<a href="mailto:support@vivacityinfotech.com">Support</a>';
-		$links[] = '<a href="http://bit.ly/1icl56K">Donate</a>';
+		$links[] = '<a href="mailto:support@vivacityinfotech.com">'. __( "Support", "wp-responsive-jquery-slider" ).'</a>';
+		$links[] = '<a href="http://bit.ly/1icl56K">'. __( "Donate", "wp-responsive-jquery-slider" ).'</a>';
 	}
 	return $links;
 }
 
 
+//language support
+ add_action('init', 'load_viva_languagetrans');
+    function load_viva_languagetrans()
+   {
+       load_plugin_textdomain('wp-responsive-jquery-slider', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+   }
+
 
 
 // setting in plugin page
 function wrjs_settings_page( $links ) {
-	$settings_block = '<a href="' . admin_url('edit.php?post_type=vslides&page=settings_section_slider' ) .'">Settings</a>';
+	$settings_block = '<a href="' . admin_url('edit.php?post_type=vslides&page=settings_section_slider' ) .'">'. __( "Settings", "wp-responsive-jquery-slider" ).'</a>';
 	array_unshift( $links, $settings_block);
 	return $links;
 }
@@ -77,14 +93,14 @@ function custom_post_type_slider() {
 		'name'                 =>  'Vslides', 
 		'singular_name'        => 	'Vslide', 
 		'all_items'            => 	'All Vslides', 
-		'add_new'              =>	'Add New Vslide', 
-		'add_new_item'         => 	'Add New Vslide', 
-		'edit_item'            => 	'Edit Vslide',
-		'new_item'             => 	'New Vslide', 
-		'view_item'            => 	'View Vslide', 
-		'search_items'         =>  'Search Vslides',
-		'not_found'            => 	'No Slide found', 
-		'not_found_in_trash'   => 	'No Slide found in Trash',
+		'add_new'              =>	__( "Add New", "wp-responsive-jquery-slider").' Vslide', 
+		'add_new_item'         => 	__( "Add New", "wp-responsive-jquery-slider").' Vslide', 
+		'edit_item'            => 	__( "Edit", "wp-responsive-jquery-slider").' Vslide',
+		'new_item'             => 	__( "New", "wp-responsive-jquery-slider").' Vslide', 
+		'view_item'            => 	__( "View", "wp-responsive-jquery-slider").' Vslide', 
+		'search_items'         =>  __( "Search", "wp-responsive-jquery-slider").' Vslide',
+		'not_found'            => 	__( "No Slide found", "wp-responsive-jquery-slider"), 
+		'not_found_in_trash'   => 	__( "No Slide found in Trash", "wp-responsive-jquery-slider"),
 		'parent_item_colon'    => ''
 	);
 	
@@ -131,12 +147,12 @@ function enqueue_script_slider() {
 
 	wp_localize_script( 'slider_script', 'wrjs', array(
 		'effect'    => $options['effect_wrjs'],
-                'show_panel_nav' => $options['show_panel_nav_wrjs'],
-                'change_post' => $options['post_wrjs'],
+      'show_panel_nav' => $options['show_panel_nav_wrjs'],
+      'change_post' => $options['post_wrjs'],
 		'delay'     => $options['delay_wrjs'],
 		'duration'  => $options['duration_wrjs'],
 		'start'     => $options['start_wrjs'],
-                'pauseOnHover'=> $options['pauseOnHover_wrjs']		
+      'pauseOnHover'=> $options['pauseOnHover_wrjs']		
 	) );
 }
 add_action( 'template_redirect', 'enqueue_style_slider' );
@@ -224,7 +240,7 @@ add_action( 'init', 'dimension_slider' );
 
 // metabox created for link
 function metabox_slider() {
-    add_meta_box( 'metabox_link_slider', 'Slide Link','metabox_link_slider', 'vslides', 'normal', 'default' );
+    add_meta_box( 'metabox_link_slider', __( "Slide Link", "wp-responsive-jquery-slider"),'metabox_link_slider', 'vslides', 'normal', 'default' );
 }
 add_action( 'add_meta_boxes', 'metabox_slider' );
 
@@ -235,8 +251,8 @@ function metabox_link_slider() {
  
 	$slide_link_url = get_post_meta( $post->ID, '_slide_link_url', true ); ?>
 	
-	<p>URL: <input type="text" style="width: 90%;" name="slide_link_url" value="<?php echo esc_attr( $slide_link_url ); ?>" /></p>
-	<span class="description"><?php echo 'The URL link to this slide.'; ?></span>
+	<p><?php _e("URL","wp-responsive-jquery-slider") ?>: <input type="text" style="width: 90%;" name="slide_link_url" value="<?php echo esc_attr( $slide_link_url ); ?>" /></p>
+	<span class="description"><?php _e("The URL link to this slide.","wp-responsive-jquery-slider") ?></span>
 	
 <?php }
 // upadte metabox link
@@ -254,8 +270,8 @@ function edit_metabox_slider() {
 	remove_meta_box( 'hybrid-core-post-template', 'vslides', 'side' );
 	remove_meta_box( 'theme-layouts-post-meta-box', 'vslides', 'side' );
 
-    add_meta_box('postimagediv','Slide Image', 'post_thumbnail_meta_box', 'vslides', 'side', 'low');
-	 add_meta_box('pageparentdiv','Slide Order', 'page_attributes_meta_box', 'vslides', 'side', 'low');
+    add_meta_box('postimagediv',__( "Slide Image", "wp-responsive-jquery-slider"), 'post_thumbnail_meta_box', 'vslides', 'side', 'low');
+	 add_meta_box('pageparentdiv',__( "Slide Order", "wp-responsive-jquery-slider"), 'page_attributes_meta_box', 'vslides', 'side', 'low');
 }
 add_action('do_meta_boxes', 'edit_metabox_slider');
 
@@ -309,7 +325,7 @@ add_filter( 'pre_get_posts', 'order_data_slider' );
 
 // settings slider link in plugin option
 function settings_slider() {
-	add_submenu_page( 'edit.php?post_type=vslides','Slider Settings', 'Settings',  'manage_options', 'settings_section_slider', 'settings_box_slider' );
+	add_submenu_page( 'edit.php?post_type=vslides', __( "Slider Settings", "wp-responsive-jquery-slider"), __( "Settings", "wp-responsive-jquery-slider"),  'manage_options', 'settings_section_slider', 'settings_box_slider' );
 }
 add_action('admin_menu', 'settings_slider');
 
@@ -324,7 +340,7 @@ function settings_box_slider() { ?>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'get_settings_option' ); ?>
 			<?php do_settings_sections( 'settings_section_slider' ); ?>
-			<br /><p><input type="submit" name="Submit" value="Update Settings" class="button-primary" /></p>
+			<br /><p><input type='submit' name='Submit' value='<?php _e( "Update Settings", "wp-responsive-jquery-slider") ?>' class='button-primary' /></p>
 			<br />
 		</form>
 		
@@ -338,15 +354,15 @@ function settings_start() {
 
 	add_settings_section( 'get_option_change_value', ' ', '', 'settings_section_slider' );
 
-	add_settings_field( 'width_wrjs', 'Slide width:', 'width_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'height_wrjs', 'Slide height:', 'height_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'delay_wrjs', 'Slide Delay:', 'delay_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'duration_wrjs',  'Slide duration:', 'duration_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'post_wrjs','choose post:', 'post_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'effect_wrjs','Slide Effect:', 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
-        add_settings_field( 'show_panel_nav_wrjs','Show Slider Navigation arrows:', 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
-	add_settings_field( 'start_wrjs', 'Start Automatically:', 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );
-        add_settings_field( 'pauseOnHover_wrjs', 'Pause On Hover:', 'pauseOnHover_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'width_wrjs', __( "Slide width:", "wp-responsive-jquery-slider"), 'width_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'height_wrjs', __( "Slide height:", "wp-responsive-jquery-slider"), 'height_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'delay_wrjs', __( "Slide Delay:", "wp-responsive-jquery-slider"), 'delay_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'duration_wrjs',  __( "Slide duration:", "wp-responsive-jquery-slider"), 'duration_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'post_wrjs', __( "Choose post:", "wp-responsive-jquery-slider"), 'post_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'effect_wrjs', __( "Slide Effect:", "wp-responsive-jquery-slider"), 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
+        add_settings_field( 'show_panel_nav_wrjs', __( "Show Slider Navigation Arrows:", "wp-responsive-jquery-slider"), 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'start_wrjs', __( "Start Automatically:", "wp-responsive-jquery-slider"), 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );
+        add_settings_field( 'pauseOnHover_wrjs', __( "Pause On Hover:", "wp-responsive-jquery-slider"), 'pauseOnHover_wrjs', 'settings_section_slider', 'get_option_change_value' );
 
 }
 add_action( 'admin_init', 'settings_start' );
@@ -394,8 +410,8 @@ function post_wrjs() {
 	$post_wrjs = $options['post_wrjs'];
 
 	echo "<select id='post_wrjs' name='get_settings_option[post_wrjs]'>";
-	echo '<option value="post" ' . selected( $post_wrjs, 'post', false ) . ' >' . 'post'. '</option>';
-	echo '<option value="vslide" ' . selected( $post_wrjs, 'vslide', false ) . ' >' . 'vslide' . '</option>';
+	echo '<option value="post" ' . selected( $post_wrjs, 'post', false ) . ' >' .'post'. '</option>';
+	echo '<option value="vslide" ' . selected( $post_wrjs, 'vslide', false ) . ' >' .'vslide'. '</option>';
 	echo '</select>';	
 }
 function effect_wrjs() {
@@ -404,8 +420,8 @@ function effect_wrjs() {
 	$effect_wrjs = $options['effect_wrjs'];
 
 	echo "<select id='effect_wrjs' name='get_settings_option[effect_wrjs]'>";
-	echo '<option value="fade" ' . selected( $effect_wrjs, 'fade', false ) . ' >' . 'fade'. '</option>';
-	echo '<option value="slide" ' . selected( $effect_wrjs, 'slide', false ) . ' >' . 'slide' . '</option>';
+	echo '<option value="fade" ' . selected( $effect_wrjs, 'fade', false ) . ' >' .'fade'. '</option>';
+	echo '<option value="slide" ' . selected( $effect_wrjs, 'slide', false ) . ' >' .'slide'. '</option>';
 	echo '</select>';	
 }
 
@@ -417,8 +433,8 @@ function show_panel_nav_wrjs() {
         
         
 	echo "<select id='show_panel_nav_wrjs' name='get_settings_option[show_panel_nav_wrjs]'>";
-	echo '<option value="1" ' . selected( $show_panel_nav_wrjs, '1', false ) . ' >' . 'Yes'. '</option>';
-	echo '<option value="0" ' . selected( $show_panel_nav_wrjs, '0', false ) . ' >' . 'No' . '</option>';
+	echo '<option value="1" ' . selected( $show_panel_nav_wrjs, '1', false ) . ' >' . __( "Yes", "wp-responsive-jquery-slider" ). '</option>';
+	echo '<option value="0" ' . selected( $show_panel_nav_wrjs, '0', false ) . ' >' . __( "No", "wp-responsive-jquery-slider" ) . '</option>';
 	echo '</select>';	
 }
 
@@ -428,8 +444,8 @@ function pauseOnHover_wrjs() {
 	$pauseOnHover_wrjs = $options['pauseOnHover_wrjs'];
  
 	echo "<select id='pauseOnHover_wrjs' name='get_settings_option[pauseOnHover_wrjs]'>";
-	echo '<option value="1" ' . selected( $pauseOnHover_wrjs, '1', false ) . ' >' . 'Yes'. '</option>';
-	echo '<option value="0" ' . selected( $pauseOnHover_wrjs, '0', false ) . ' >' . 'No' . '</option>';
+	echo '<option value="1" ' . selected( $pauseOnHover_wrjs, '1', false ) . ' >' . __( "Yes", "wp-responsive-jquery-slider" ). '</option>';
+	echo '<option value="0" ' . selected( $pauseOnHover_wrjs, '0', false ) . ' >' . __( "No", "wp-responsive-jquery-slider" ) . '</option>';
 	echo '</select>';
 	
  }
@@ -473,9 +489,9 @@ function defult_setting_slider() {
 			'post_wrjs'    => 'vslide',
 			'delay_wrjs'     => '5000',
 			'duration_wrjs'  => '600',
-                        'show_panel_nav_wrjs' => '1',
+         'show_panel_nav_wrjs' => '1',
 			'start_wrjs'     => 1,
-                        'pauseOnHover_wrjs' => '1'		
+         'pauseOnHover_wrjs' => '1'		
 		);	
 
 		update_option( 'get_settings_option', $default_options );

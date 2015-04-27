@@ -4,14 +4,14 @@ Plugin Name: WP Responsive Jquery Slider
 Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
 Version: 1.3
-Author URI: http://www.vivacityinfotech.net
+Author Email: support@vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
 Text Domain: wp-responsive-jquery-slider
 Domain Path: /languages/
 */
 
-/*Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : vivacityinfotech.jaipur@gmail.com)
+/*Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : support@vivacityinfotech.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 

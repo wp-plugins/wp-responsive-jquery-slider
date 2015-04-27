@@ -3,7 +3,7 @@ Contributors: vivacityinfotech.jaipur
 Donate link: http://bit.ly/1icl56K
 Tags: WP Responsive Jquery Slider, Responsive Jquery Slider , Responsive Slider, Jquery Slider, Responsive Jquery Slider wordpress, Jquery Slider wordpress, Responsive Slider wordpress, Slider wordpress, Slider, image slider, photo slider, jquery slideshow, Responsive jquery slideshow, custom post type slider, image slider, image slider wordpress, responsive image slider, responsive image slider wordpress.  
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.2
 License: GPLv2 or later
 Stable tag: 1.3
 

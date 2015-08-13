@@ -5,7 +5,7 @@ Tags: WP Responsive Jquery Slider, Responsive Jquery Slider , Responsive Slider,
 Requires at least: 3.0
 Tested up to: 4.2
 License: GPLv2 or later
-Stable tag: 1.3
+Stable tag: 1.4
 
 An easy way to add WP Responsive Jquery Slider in your pages and post with shortcode[post_slider].
 

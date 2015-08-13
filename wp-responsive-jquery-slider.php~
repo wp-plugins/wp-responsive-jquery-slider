@@ -4,14 +4,13 @@ Plugin Name: WP Responsive Jquery Slider
 Plugin URI: http://www.vivacityinfotech.net
 Description: WP Responsive Jquery Slider is world renowned as the most beautiful and easy to use slider on the market.Create dynamic slideshows that adapt to any screen in just few clicks. WP Responsive Jquery Slider one of the best ways to display lots of information in a relatively small space while adding cool functionality to a web page.The jQuery plugin is completely free and totally open source, and there is literally no better way to make your website look totally stunning.
 Version: 1.3
-Author Email: support@vivacityinfotech.net
 Requires at least: 3.8
 License: vivacityinfotech
 Text Domain: wp-responsive-jquery-slider
 Domain Path: /languages/
 */
 
-/*Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : support@vivacityinfotech.net)
+/*Copyright 2014  Vivacity InfoTech Pvt. Ltd.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -26,23 +25,19 @@ Domain Path: /languages/
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-/*
-__( "Settings", "wp-responsive-jquery-slider" )
 
-<?php _e("Set","wp-responsive-jquery-slider") ?>
-
-*/
+error_reporting(0);
 
 add_filter('plugin_row_meta', 'RegisterPluginLinks_slider',10, 2);
 function RegisterPluginLinks_slider($links, $file) {
 	if ( strpos( $file, 'wp-responsive-jquery-slider.php' ) !== false ) {
 		$links[] = '<a href="https://wordpress.org/plugins/wp-responsive-jquery-slider/faq/">FAQ</a>';
-		$links[] = '<a href="mailto:support@vivacityinfotech.com">'. __( "Support", "wp-responsive-jquery-slider" ).'</a>';
+		$links[] = '<a href="http://www.vivacityinfotech.net/support">'. __( "Support", "wp-responsive-jquery-slider" ).'</a>';
 		$links[] = '<a href="http://bit.ly/1icl56K">'. __( "Donate", "wp-responsive-jquery-slider" ).'</a>';
 	}
 	return $links;
 }
-
+ 
 
 //language support
  add_action('init', 'load_viva_languagetrans');
@@ -90,7 +85,7 @@ register_uninstall_hook( __FILE__, 'uninstall_slider' );
 function custom_post_type_slider() {
 	
 	$labels = array(
-		'name'                 =>  'Vslides', 
+		'name'                 =>  'Vslider', 
 		'singular_name'        => 	'Vslide', 
 		'all_items'            => 	'All Vslides', 
 		'add_new'              =>	__( "Add New", "wp-responsive-jquery-slider").' Vslide', 
@@ -124,7 +119,61 @@ function custom_post_type_slider() {
 	register_post_type( 'vslides', $args );
 }
 add_action( 'init', 'custom_post_type_slider' );
+add_action( 'init', 'create_my_taxonomies', 0 );
+function create_my_taxonomies() {
+    register_taxonomy(
+        'multiple_slider',
+        'vslides',
+        array(
+            'labels' => array(
+                'name' => 'Create new slider',
+                'add_new_item' => 'Add New Slider Name',
+                'new_item_name' => "New Slider",
+                'edit_item' => "Edit Slider Name",
+                'update_item' => "Update Slider Name",
+                'all_items' => "All Slider",
+                'search_items' =>"Search Slider",
+                'not_found' => "No Slider Found",
+                'parent_item' => "Parent Slider"
+            ),
+            'show_ui' => true,
+            'show_tagcloud' => false,
+            'hierarchical' => true
+        )
+    );
+}
+add_action( 'admin_head-edit-tags.php', 'wpse_58799_remove_parent_category' );
 
+
+function wpse_58799_remove_parent_category()
+{
+    if ( 'vslides' != $_GET['post_type'] )
+        return;
+
+    $parent = 'parent()';
+   $Slider_Width = get_option( "slider_width_$termid");
+ $Slider_height = get_option("slider_height_$termid");
+   $get_settings_option = get_option("get_settings_option_$termid");
+ $slider_delay = get_option("slider_delay_$termid");
+  $slider_duration = get_option("slider_duration_$termid");
+  $slider_effect = get_option("slider_effect_$termid");
+    if ( isset( $_GET['action'] ) )
+        $parent = 'parent().parent()';
+
+    ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($)
+            {     
+                $('label[for=parent]').<?php echo $parent; ?>.remove(); 
+                //  $('#tag-description').parent().remove();
+                  $('#tag-description').val('Slider Shortcode is: [post_slider="slug name"]');
+                  
+            }); 
+        </script>
+        
+    <?php
+}
+ 
 // linked with css and jquery
 function enqueue_style_slider() {
 	
@@ -144,33 +193,69 @@ function enqueue_script_slider() {
 	
 
 	$options = get_option( 'get_settings_option' );
-
+  
 	wp_localize_script( 'slider_script', 'wrjs', array(
 		'effect'    => $options['effect_wrjs'],
       'show_panel_nav' => $options['show_panel_nav_wrjs'],
       'change_post' => $options['post_wrjs'],
 		'delay'     => $options['delay_wrjs'],
 		'duration'  => $options['duration_wrjs'],
+		'direction' => $options['direction_wrjs'],
 		'start'     => $options['start_wrjs'],
       'pauseOnHover'=> $options['pauseOnHover_wrjs']		
 	) );
-}
+
+ 
+	 
+} 
 add_action( 'template_redirect', 'enqueue_style_slider' );
 
 add_action( 'template_redirect', 'enqueue_script_slider' );
 
 // get slide at front from custom post type
-function post_slider() {
+function post_slider($slug) {
+
+	  $term = get_term_by('slug',$slug[0], 'multiple_slider','OBJECT'); 
+ 
   $options = get_option( 'get_settings_option' );
       if ($options['post_wrjs']=='vslide'){
-	$slides = new WP_Query( array( 'post_type' => 'vslides', 'order' => 'ASC', 'orderby' => 'menu_order' ) );
+if($slug !='')
+{
+	$slides = new WP_Query( 
+    array(
+       'post_type' => 'vslides',  
+       'tax_query' => array(
+          array (
+            'taxonomy' => 'multiple_slider',
+            'field' => 'slug',
+            'terms' => $slug,
+          )
+       ),
+       'posts_per_page' => '-1',
+       'order' => 'ASC', 
+       'orderby' => 'menu_order'
+    )
+);	
+	}
+	else {
+		
+			$slides = new WP_Query( 
+    array(
+       'post_type' => 'vslides',  
+      
+       'posts_per_page' => '-1',
+       'order' => 'ASC', 
+       'orderby' => 'menu_order'
+    )
+);	
+		
+	}
 	}
 	else{
-		
-		
+ 	
 $slides = new WP_Query( array( 'post_type' => 'post', 'order' => 'ASC', 'orderby' => 'menu_order' ) );		
 		}
-      
+      // print_r($slides);
         if ($options['show_panel_nav_wrjs']== 0){
            $show_panel_nav = 'remove';
         }
@@ -181,13 +266,16 @@ $slides = new WP_Query( array( 'post_type' => 'post', 'order' => 'ASC', 'orderby
 	$slider = '';
 	
 	if ( $slides->have_posts() ) :
-		
-		$slider = '<div class="contain_slider wrjs">';
-		
-			$slider .= '<ul class="slides">';
+
+   
+		$slider = '<div id="wrjs_'.$term->term_id.'" class="contain_slider wrjs">';
+	// enqueue_script_slider_multiple($term->term_id);
+		 	$slider .= '<ul class="slides">';
 				
 			while ( $slides->have_posts() ) : $slides->the_post();
-			
+	 
+	 
+		
 				$slider .= '<li>';
 				   
 					$slider .= '<div id="slide-' . get_the_ID() . '" class="slide">';
@@ -200,7 +288,11 @@ $slides = new WP_Query( array( 'post_type' => 'post', 'order' => 'ASC', 'orderby
 									$slider .= '<a href="' . get_post_meta( $post->ID, "_slide_link_url", true ) . '" title="' .  the_title_attribute ( array( 'echo' => 0 ) ) . '" >';
 
 									$slider .= get_the_post_thumbnail( $post->ID, 'slide-thumbnail', array( 'class' => 'slide-thumbnail' ) );
-
+									$caption_wrjs = $options['caption_wrjs'];
+									if($caption_wrjs=='1')
+									{
+       $slider .='<p class="flex-caption">'.get_the_title().'</p>';
+}							
 								if ( get_post_meta( $post->ID, "_slide_link_url", true ) ) 
 									$slider .= '</a>';
 
@@ -217,7 +309,7 @@ $slides = new WP_Query( array( 'post_type' => 'post', 'order' => 'ASC', 'orderby
 			$slider .= '</ul>';
 			
 		$slider .= '</div>';
-	
+ 
 	endif;
 
 	wp_reset_query();
@@ -336,7 +428,7 @@ function settings_box_slider() { ?>
 		
 		<?php screen_icon( 'plugins' ); ?>
 		<h2><?php 'Wrjs Slider Options'; ?></h2>
-		
+		<div class="settings-banner">   <h3 class="title">WP Responsive Jquery Slider by Vivacity infotech</h3>   </div>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'get_settings_option' ); ?>
 			<?php do_settings_sections( 'settings_section_slider' ); ?>
@@ -355,11 +447,13 @@ function settings_start() {
 	add_settings_section( 'get_option_change_value', ' ', '', 'settings_section_slider' );
 
 	add_settings_field( 'width_wrjs', __( "Slide width:", "wp-responsive-jquery-slider"), 'width_wrjs', 'settings_section_slider', 'get_option_change_value' );
+	add_settings_field( 'caption_wrjs', __( "Slider caption:", "wp-responsive-jquery-slider"), 'caption_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'height_wrjs', __( "Slide height:", "wp-responsive-jquery-slider"), 'height_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'delay_wrjs', __( "Slide Delay:", "wp-responsive-jquery-slider"), 'delay_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'duration_wrjs',  __( "Slide duration:", "wp-responsive-jquery-slider"), 'duration_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'post_wrjs', __( "Choose post:", "wp-responsive-jquery-slider"), 'post_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'effect_wrjs', __( "Slide Effect:", "wp-responsive-jquery-slider"), 'effect_wrjs', 'settings_section_slider', 'get_option_change_value' );
+ 
         add_settings_field( 'show_panel_nav_wrjs', __( "Show Slider Navigation Arrows:", "wp-responsive-jquery-slider"), 'show_panel_nav_wrjs', 'settings_section_slider', 'get_option_change_value' );
 	add_settings_field( 'start_wrjs', __( "Start Automatically:", "wp-responsive-jquery-slider"), 'start_wrjs', 'settings_section_slider', 'get_option_change_value' );
         add_settings_field( 'pauseOnHover_wrjs', __( "Pause On Hover:", "wp-responsive-jquery-slider"), 'pauseOnHover_wrjs', 'settings_section_slider', 'get_option_change_value' );
@@ -368,13 +462,29 @@ function settings_start() {
 add_action( 'admin_init', 'settings_start' );
 
 
+
+
+
 function width_wrjs() {
 
 	$options = get_option( 'get_settings_option' );
 	$width_wrjs = $options['width_wrjs'];
+
  ?>
 
 	<input type="text" id="width_wrjs" name="get_settings_option[width_wrjs]" value="<?php echo $width_wrjs; ?>" /> <span class="description"><?php  'px'; ?></span>
+	
+<?php }
+
+function caption_wrjs() {
+
+	$options = get_option( 'get_settings_option' );
+ $caption_wrjs = $options['caption_wrjs'];
+  
+ ?>
+<input type="radio" name="get_settings_option[caption_wrjs]" <?php if($caption_wrjs=='1'){?> checked=checked <?php }?>  value="1">Yes <br>
+<input type="radio" name="get_settings_option[caption_wrjs]" <?php if($caption_wrjs=='0'){?> checked=checked <?php }?>  value="0">No 
+<span class="description"><?php  'px'; ?></span>
 	
 <?php }
 
@@ -424,7 +534,7 @@ function effect_wrjs() {
 	echo '<option value="slide" ' . selected( $effect_wrjs, 'slide', false ) . ' >' .'slide'. '</option>';
 	echo '</select>';	
 }
-
+ 
 
 function show_panel_nav_wrjs() {
 
@@ -464,8 +574,11 @@ function check_slider( $input ) {
 	$options = get_option( 'get_settings_option' );
 	
 	$options['width_wrjs'] = wp_filter_nohtml_kses( intval( $input['width_wrjs'] ) );
+$options['caption_wrjs'] = wp_filter_nohtml_kses( intval( $input['caption_wrjs'] ) );	
+	
 	$options['height_wrjs'] = wp_filter_nohtml_kses( intval( $input['height_wrjs'] ) );
 	$options['effect_wrjs'] = wp_filter_nohtml_kses( $input['effect_wrjs'] );
+	$options['direction_wrjs'] = wp_filter_nohtml_kses( $input['direction_wrjs'] );
 	$options['post_wrjs'] = wp_filter_nohtml_kses( $input['post_wrjs'] );
         $options['show_panel_nav_wrjs'] = wp_filter_nohtml_kses( $input['show_panel_nav_wrjs'] );
 	$options['delay_wrjs'] = wp_filter_nohtml_kses( intval( $input['delay_wrjs'] ) );
@@ -484,8 +597,10 @@ function defult_setting_slider() {
 
 		$default_options = array(	
 			'width_wrjs'     => '960',
+			'caption_wrjs'  => 'yes',
 			'height_wrjs'    => '350',
 			'effect_wrjs'    => 'slide',
+			'direction_wrjs'    => 'vertical',
 			'post_wrjs'    => 'vslide',
 			'delay_wrjs'     => '5000',
 			'duration_wrjs'  => '600',
@@ -497,6 +612,4 @@ function defult_setting_slider() {
 		update_option( 'get_settings_option', $default_options );
 	}	
 }
-
-
 ?>
